@@ -1,31 +1,9 @@
 #include <stdlib.h> /* for size_t */
+#include "region.h"
+#include "err_codes.h"
 
 #ifndef HEAP_H
 #define HEAP_H
-
-/* error return codes */
-#define SUCCESS 0
-#define FAILURE 1
-
-typedef struct {
-     unsigned dim;
-     double *data;	/* length 2*dim = center followed by half-widths */
-     double vol;	/* cache volume = product of widths */
-} hypercube;
-
-typedef struct {
-     double val, err;
-} esterr;
-
-
-typedef struct {
-     hypercube h;
-     unsigned splitDim;
-     unsigned fdim; /* dimensionality of vector integrand */
-     esterr *ee; /* array of length fdim */
-     double errmax; /* max ee[k].err */
-} region;
-
 
 typedef region heap_item;
 #define KEY(hi) ((hi).errmax)
