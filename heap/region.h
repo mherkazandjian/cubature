@@ -1,3 +1,15 @@
+/**
+ * @file region.h
+ * @brief Defines the region structure used for numerical integration in a multidimensional space.
+ *
+ * This file contains the definition of the `region` structure, which represents a region within a hypercube
+ * for the purpose of numerical integration. It includes information about the hypercube, the dimension along
+ * which the region is split, the dimensionality of the vector integrand, and error estimates.
+ */
+
+#ifndef REGION_H
+#define REGION_H
+
 #include "hypercube.h"
 typedef struct {
      double val, err;
@@ -33,3 +45,5 @@ typedef struct {
      esterr *ee; /* array of length fdim */
      double errmax; /* max ee[k].err */
 } region;
+
+#endif

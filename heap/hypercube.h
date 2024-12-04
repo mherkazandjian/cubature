@@ -26,6 +26,8 @@
  *   }
  */
 
+#ifndef HYPERCUBE_H
+#define HYPERCUBE_H
 typedef struct {
     unsigned dim; /**< Dimension of the hypercube. */
     double *data; /**< Center and half-widths of the hypercube. */
@@ -73,3 +75,5 @@ void print_hypercube(const hypercube *h);
  * @param h Pointer to the hypercube structure to be destroyed.
  */
 void destroy_hypercube(hypercube *h);
+
+#endif
