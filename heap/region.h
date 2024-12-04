@@ -1,18 +1,14 @@
-/**
- * @file region.h
- * @brief Defines the region structure used for numerical integration in a multidimensional space.
- *
- * This file contains the definition of the `region` structure, which represents a region within a hypercube
- * for the purpose of numerical integration. It includes information about the hypercube, the dimension along
- * which the region is split, the dimensionality of the vector integrand, and error estimates.
- */
 
 #ifndef REGION_H
 #define REGION_H
 
 #include "hypercube.h"
+/**
+ * @brief Structure to hold a value and its associated error.
+ */
 typedef struct {
-     double val, err;
+     double val; /**< The value. */
+     double err; /**< The associated error. */
 } esterr;
 
 /**
@@ -46,4 +42,31 @@ typedef struct {
      double errmax; /* max ee[k].err */
 } region;
 
+/**
+ * @brief Creates a region from a given hypercube.
+ *
+ * @param h Pointer to the hypercube.
+ * @param fdim The dimension of the function.
+ * @return A region object.
+ */
+region make_region(const hypercube *h, unsigned fdim);
+
+/**
+ * @brief Destroys a given region.
+ *
+ * @param R Pointer to the region to be destroyed.
+ */
+void destroy_region(region *R);
+
+/**
+ * @brief Cuts a region into two regions.
+ *
+ * @param R Pointer to the original region which will be modified.
+ * @param R2 Pointer to the second region which will be created.
+ * @return An integer indicating success (0) or failure (non-zero).
+ */
+int cut_region(region *R, region *R2);
+
 #endif
+
+
