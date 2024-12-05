@@ -4,17 +4,11 @@
 
 int main(int argc, char **argv)
 {
-    heap regions;
-    region *R = NULL;
-    size_t nR_alloc = 0;
-    esterr *ee = NULL;
+    printf("\n\n");
+    printf("***************************************************************\n");
+    printf("********************** hypercube example **********************\n");
+    printf("***************************************************************\n");
 
-    unsigned int fdim = 1;
-    regions = heap_alloc(1, fdim);
-
-    /*
-       hypercube example usage
-    */
     hypercube h;
 
     // define a hypercube of dimension 1 with a certain range (xmin,xmax)
@@ -60,6 +54,52 @@ int main(int argc, char **argv)
     destroy_hypercube(&h);
     printf("--------------------\n");
 
-    printf("hello world\n");
+    printf("\n\n");
+    printf("***************************************************************\n");
+    printf("************************ heap example *************************\n");
+    printf("***************************************************************\n");
+
+    heap regions;
+
+    // basic operations of alloc, resize and free
+    regions = heap_alloc(1, 1);
+    heap_resize(&regions, 32);
+    heap_free(&regions);
+
+    // push some elements onto the heap
+    regions = heap_alloc(10, 1);
+
+    // make a region and define its error estimates and value and the region
+    // properties using the hypercube range and push it to the heap
+    double xmin_R1 = {-1};
+    double xmax_R1 = {1};
+    hypercube R1 = make_hypercube_range(1, xmin1, xmax1);
+    region r1 = make_region(&R1, 1);
+    r1.ee[0].val = 1;
+    r1.ee[0].err = 0.1;
+    r1.errmax = 0.1;
+    heap_push(&regions, r1);
+
+    // define the two sub-regions and push them to the heap
+    double xmin_R1l[] = {-1};
+    double xmax_R1l[] = {0};
+    hypercube R1l = make_hypercube_range(1, xmin_R1l, xmax_R1l);
+    region r1l = make_region(&R1l, 1);
+    r1l.ee[0].val = 2;
+    r1l.ee[0].err = 0.2;
+    r1l.errmax = 0.2;
+    heap_push(&regions, r1l);
+
+    double xmin_R1r[] = {0};
+    double xmax_R1r[] = {1};
+    hypercube R1r = make_hypercube_range(1, xmin_R1r, xmax_R1r);
+    region r1r = make_region(&R1r, 1);
+    r1r.ee[0].val = 2;
+    r1r.ee[0].err = 0.2;
+    r1r.errmax = 0.2;
+    heap_push(&regions, r1r);
+
+    // print the heap in a tree format
+    print_heap(&regions);
     exit(0);
 }
